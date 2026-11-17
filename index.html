@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#0a0812">
+  <meta name="description" content="输入生日，查看年龄、今年进度和人生进度，并用时间轴探索不同年龄。">
+  <title>人生进度条</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="calendar.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <main class="shell">
+    <header class="toolbar">
+      <h1 class="wordmark"><span class="orbital-mark" aria-hidden="true"></span>人生进度条</h1>
+    </header>
+
+    <section id="stage" class="stage" aria-label="年龄与时间进度">
+      <div class="stage-content">
+        <header class="stage-heading">
+          <button id="back-today" class="button quiet time-mode" type="button" hidden>回到今天</button>
+          <time id="today" class="today"><span class="live-dot" aria-hidden="true"></span><span id="today-value"></span></time>
+        </header>
+
+        <div class="age">
+          <span id="age-label" class="age-label">当前年龄</span>
+          <p class="age-heading"><span id="years" class="number">—</span><span class="age-unit">岁</span></p>
+          <p id="age-remainder" class="age-remainder"></p>
+          <p id="lived" class="lived"></p>
+        </div>
+
+        <div class="metrics">
+          <section class="metric year" aria-labelledby="year-heading">
+            <div class="metric-heading">
+              <h2 id="year-heading">今年进度</h2>
+              <p class="percentage number"><span id="year-number">—</span><span class="percent-unit">%</span></p>
+            </div>
+            <div id="year-bar" class="track" role="progressbar" aria-labelledby="year-heading" aria-valuemin="0" aria-valuemax="100">
+              <span class="fill" aria-hidden="true"></span>
+            </div>
+            <p id="year-note" class="metric-note"></p>
+          </section>
+
+          <section class="metric life" aria-labelledby="life-heading">
+            <div class="metric-heading">
+              <h2 id="life-heading">人生进度</h2>
+              <p class="percentage number"><span id="life-number">—</span><span class="percent-unit">%</span></p>
+            </div>
+            <div id="life-bar" class="track" role="progressbar" aria-labelledby="life-heading" aria-valuemin="0" aria-valuemax="100">
+              <span class="fill" aria-hidden="true"></span>
+            </div>
+            <p id="life-note" class="metric-note"></p>
+          </section>
+        </div>
+      </div>
+    </section>
+
+    <div class="control-deck">
+      <form id="settings" class="settings" novalidate>
+        <div class="field birthday-field">
+          <label for="birthday">出生日期 <span id="example-label">示例</span></label>
+          <input id="birthday" name="birthday" type="date" min="0001-01-01" value="2000-01-01" autocomplete="off" required>
+        </div>
+        <div class="field baseline-field">
+          <label for="baseline">寿命基准</label>
+          <div class="baseline-input">
+            <input id="baseline" name="baseline" type="number" inputmode="numeric" min="1" max="150" step="1" value="80" required>
+            <span aria-hidden="true">岁</span>
+          </div>
+        </div>
+        <button class="button apply" type="submit">更新进度 <span aria-hidden="true">↗</span></button>
+        <p id="form-error" class="form-error" role="status" hidden></p>
+        <div id="themes" class="themes" role="group" aria-label="氛围主题">
+          <span>主题</span>
+          <button class="theme" type="button" data-theme="orbit" aria-pressed="true">星环</button>
+          <button class="theme" type="button" data-theme="moon" aria-pressed="false">月蓝</button>
+          <button class="theme" type="button" data-theme="ember" aria-pressed="false">余晖</button>
+        </div>
+      </form>
+
+      <section class="timeline" aria-labelledby="timeline-heading">
+        <div class="timeline-heading">
+          <h2 id="timeline-heading"><label for="journey">人生时间轴</label></h2>
+          <button id="play" class="button quiet trail-button" type="button"><span class="play-icon" aria-hidden="true">▷</span><span id="play-label">播放人生</span></button>
+        </div>
+        <input id="journey" class="journey" type="range" step="1" aria-describedby="timeline-note">
+        <div id="milestones" class="milestones" role="group" aria-label="跳转到人生节点">
+          <button type="button" class="milestone" data-point="birth">出生</button>
+          <button type="button" class="milestone" data-point="adult">18 岁</button>
+          <button type="button" class="milestone" data-point="today" aria-pressed="true">今天</button>
+          <button type="button" class="milestone" data-point="baseline" id="baseline-point">80 岁</button>
+        </div>
+        <span id="timeline-note" class="sr-only">拖动时间轴预览不同日期，或者选择一个年龄节点。点击今天返回实际进度。</span>
+      </section>
+    </div>
+  </main>
+</body>
+</html>
+
